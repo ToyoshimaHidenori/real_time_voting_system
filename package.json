@@ -4,7 +4,7 @@
   "description": "node.js+express+socket.ioでリアルタイム投票システムを作成する",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
