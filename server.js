@@ -16,14 +16,11 @@ var user_names={};
 var user_is_accepting=[];
 
 app.get('/' , function(req, res){
-    res.sendFile('/real_time_votiong_system/index.html');
-    // res.redirect('/real_time_votiong_system');
-    // res.sendFile(__dirname+'/index.html');
+    res.sendFile(__dirname+'/index.html');
 });
 
 app.get('/admin/' , function(req, res){
-    // res.sendFile(__dirname+'/admin.html');
-    res.sendFile('/real_time_votiong_system/admin.html');
+    res.sendFile(__dirname+'/admin.html');
 });
 
 io.on('connection',function(socket){

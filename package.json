@@ -4,7 +4,7 @@
   "description": "node.js+express+socket.ioでリアルタイム投票システムを作成する",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ToyoshimaHidenori/real_time_votiong_system#readme",
   "dependencies": {
-    "jquery": "^3.4.1"
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "socket.io": "^2.3.0"
   }
 }
