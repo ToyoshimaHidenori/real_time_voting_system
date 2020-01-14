@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <!-- socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <title>承認会議</title>
+    </head>
+    <div id="alert-1" class="lead"></div>
+
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">登録する</button>
+
+    <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">あなたの団体情報を入力してください</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="user_info_form" action="#">
+                    <div class="modal-body">  
+                        <div class="form-group">
+                                <label for="user_name_input">団体名</label>
+                                <input type="text" class="form-control" id="user_name_input" aria-describedby="団体名">
+                                <small id="emailHelp" class="form-text text-muted">他団体と区別できる名前を登録してください。</small>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group flex-nowrap">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="addon-wrapping">@</span>
+                                </div>
+                                <input type="number" class="form-control" id="user_id" placeholder="団体番号を入力してください" aria-label="団体番号を入力してください" aria-describedby="addon-wrapping">
+                            </div>
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                        <button type="button, submit" class="btn btn-primary">送信</button>
+                    </div>
+                </form id="message_form" action="#">
+            </div>
+        </div>
+    </div>
+
+    <body>
+        <h1 id="voter">しばらくお待ちください</h1>
+        <h2 id="is_accptd">投票中...</h2>
+        <form id="ballot_form" action="#">
+            <div id="ballot" class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary">
+                  <input type="radio" name="votes" id="option1" value="accept" checked> 承認
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="votes" id="option2" value="deny"> 否認
+                </label>
+            </div>
+            <button type="button, submit" id="vote_submit" class="btn btn-primary btn-lg">送信</button>
+        </form>
+
+        <ul id="messages"></ul>
+
+        <form id="message_form" action="#">
+          <input id="input_msg" autocomplete="off" /><button>送信</button>
+        </form>
+
+
+
+
+
+
+        <script>
+            var socketio = io();
+            var user_name="匿名団体";
+            var voter_name="匿名団体";
+            var user_id=0;
+            var num_attending_user=30;
+            var num_accept=0;
+            var num_deny=0;
+            document.cookie = 'user_id=0';
+            document.cookie = 'user_name=匿名団体';
+            $(document).ready(function(){
+                $('.modal').modal('show');
+            });
+            
+            function alert(msg) {
+                return $('<div class="alert" role="alert"></div>')
+                    .text(msg);
+            }
+            /**
+             * アラート要素(Closeボタン付き)を生成する
+             */
+            function alertWithCloseBtn(msg) {
+            return alert(msg)
+                .addClass('alert-success alert-dismissable')
+                .append(
+                $('<button class="close" data-dismiss="alert"></button>')
+                    .append(
+                    $('<span aria-hidden="true">☓</span>')
+                    )
+                );
+            }
+
+
+            $(function(){
+              $('#ballot_form').submit(function(){
+                socketio.emit('vote', $("input[name='votes']:checked").val()+","+user_id);
+                $('#vote_submit').prop('disabled', true);
+                const e = alert(voter_name+'への投票を送信しました。').addClass('alert-primary');
+                $('#alert-1').append(e);
+                setTimeout(() => {
+                    e.alert('close');
+                }, 5000);
+                return false;
+              });
+              $('#user_info_form').submit(function(){
+                socketio.emit('user_info', $('#user_id').val()+","+$('#user_name_input').val());
+                user_id=$('#user_id').val();
+                user_name=$('#user_name_input').val();
+
+                // modalを閉じる
+                $('body').removeClass('modal-open'); // 1
+                $('.modal-backdrop').remove();       // 2
+                $('#input_user_info').modal('hide'); 
+
+                // アラートを表示して、一定時間経過後消去する。
+                const e = alert(user_name+'として登録が完了しました！ 入力ありがとうございます。').addClass('alert-success');
+                $('#alert-1').append(e);
+                setTimeout(() => {
+                    e.alert('close');
+                }, 5000);
+
+                $('#user_id').val('');
+                return false;
+                $('#input_name_input').val('');
+                return false;
+              });
+            //   $('#user_info_form').submit(function(){
+            //     user_id=$('#user_id').val();
+            //     socketio.emit('user_id', $('#user_id').val());
+            //     $('#user_id').val('');
+            //     return false;
+            //   });
+              $('#message_form').submit(function(){
+                socketio.emit('message', $('#input_msg').val());
+                $('#input_msg').val('');
+                return false;
+              });
+              socketio.on('message',function(msg){
+                $('#messages').append($('<li>').text(msg));
+              });
+
+              socketio.on('is_accepted',function(is_accptd){
+                  if(is_accptd){
+                    $('#is_accptd').text('承認されました');
+                  }else{
+                    $('#is_accptd').text('否認されました');
+                  }
+              });
+              socketio.on('voter',function(vtr){
+                $('#messages').append($('<li>').text(vtr));
+                $('#voter').text("現在の発表者は"+vtr);
+                $('#vote_submit').prop('disabled', false);
+                voter_name=vtr;
+              });
+            });
+
+
+
+            
+            
+        </script>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+    </body>
+</html>
