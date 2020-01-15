@@ -8,17 +8,25 @@
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
         <!-- socket.io -->
         <script src="/socket.io/socket.io.js"></script>
-
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+        <!-- opening animation -->
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./opening.css">
         <title>発表用</title>
     </head>
     <body>
+        <div class="bg">
+          <p class="opening_text">承認会議</p>
+        </div>
         <h1 id="voter">しばらくお待ちください</h1>
-        <h2 id="is_accptd">投票中...</h2>
+        <h2 id="is_accptd"></h2>
         <h2>賛成団体数</h2>
         <h3 id="num_accept">0</h3>
+        <div class="progress">
+          <div id="bar_accept" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+        </div>
         <h2>反対団体数</h2>
         <h3 id="num_deny">0</h3>
         <ul id="messages"></ul>
@@ -50,6 +58,11 @@
  
               $('#num_of_attendees_form').submit(function(){
                 socketio.emit('num_attendees', $('#input_attendees_num').val());
+                num_attending_user=$('#input_attendees_num').val();
+                $('#bar_accept').attr({
+                  'aria-valuenow': num_accpt,
+                  'aria-valuemax': num_attending_user
+                });
                 $('#input_attendees_num').val('');
                 return false;
               });
@@ -58,36 +71,51 @@
                 $('#input_voter').val('');
                 return false;
               });
+
               socketio.on('is_accepted',function(is_accptd){
                   if(is_accptd){
                     $('#is_accptd').text('承認されました');
                   }else{
                     $('#is_accptd').text('否認されました');
                   }
+                  return false;
               });
 
               socketio.on('num_accept',function(num_accpt){
                 num_accept=num_accpt;
                 $('#num_accept').text(num_accpt);
+                $('#bar_accept').attr({
+                  'aria-valuenow': num_accpt,
+                  'aria-valuemax': num_attending_user
+                });
+                return false;
               });
               socketio.on('num_deny',function(num_dny){
                 num_deny=num_dny;
                 $('#num_deny').text(num_deny);
+                return false;
               });
 
               socketio.on('message',function(msg){
                 $('#messages').append($('<li>').text(msg));
+                  return false;
               });
               socketio.on('voter',function(vtr){
                 $('#voter').text("現在の発表者は"+vtr);
+                $('#is_accptd').text('投票中です');
                 is_voting=true;
                 voter_name=vtr;
                 num_accept=0;
                 num_deny=0;
                 $('#num_accpt').text(num_accept);
                 $('#num_deny').text(num_deny);
+                $('#bar_accept').attr({
+                  'aria-valuenow': num_accpt,
+                  'aria-valuemax': num_attending_user
+                });
                 is_accepted=false;
               });
+              return false;
             });
         </script>
 

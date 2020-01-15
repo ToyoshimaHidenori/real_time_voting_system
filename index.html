@@ -11,13 +11,15 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+        <!-- アイコン -->
+        <script src="https://kit.fontawesome.com/97ad166a09.js" crossorigin="anonymous"></script>
         <title>承認会議</title>
     </head>
     <div id="alert-1" class="lead"></div>
 
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">登録する</button>
+    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">
+        <i class="fas fa-users-cog"></i> 再登録する</button>
 
     <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
         <div class="modal-dialog" role="document">
@@ -171,6 +173,7 @@
                 $('#messages').append($('<li>').text(vtr));
                 $('#voter').text("現在の発表者は"+vtr);
                 $('#vote_submit').prop('disabled', false);
+                $('#is_accptd').text('投票中...');
                 voter_name=vtr;
               });
             });
