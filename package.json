@@ -1,6 +1,9 @@
 {
   "name": "real_time_voting_system",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.13.0"
+  },
   "description": "node.js+express+socket.ioでリアルタイム投票システムを作成する",
   "main": "server.js",
   "scripts": {
@@ -20,7 +23,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "jquery": "^3.4.1",
-    "lottie-web": "^5.6.0",
     "socket.io": "^2.3.0"
   }
 }
