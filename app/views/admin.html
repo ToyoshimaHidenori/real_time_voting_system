@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <!-- socket.io -->
+        <script src="/socket.io/socket.io.js"></script>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+        <!-- opening animation -->
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./opening.css">
+        <title>発表用</title>
+    </head>
+    <body>
+        <div class="bg">
+          <p class="opening_text">承認会議</p>
+        </div>
+        <h1 id="voter">しばらくお待ちください</h1>
+        <h2 id="is_accptd"></h2>
+        <h2>賛成団体数</h2>
+        <h3 id="num_accept">0</h3>
+        <div class="progress">
+          <div id="bar_accept" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+        </div>
+        <h2>反対団体数</h2>
+        <h3 id="num_deny">0</h3>
+        <ul id="messages"></ul>
+
+        <form id="voters_form" action="#">
+        <div class="input-group mb-3">
+          <input id="input_voter" autocomplete="off" type="text" class="form-control" placeholder="次に承認決議を行う団体名を入力" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <div class="input-group-append">
+            <button type="button, submit" class="btn btn-primary btn-lg">送信</button type="button, submit" class="btn btn-primary btn-lg">
+          </div>
+        </div>
+        </form>
+
+        <form id="num_of_attendees_form" action="#">
+          <div class="input-group mb-3">
+            <input id="input_attendees_num" autocomplete="off" type="number" class="form-control" placeholder="出席している団体数を入力" aria-label="参加者数" aria-describedby="button-addon2">
+            <div class="input-group-append">
+              <button type="button, submit" class="btn btn-primary btn-lg">送信</button type="button, submit" class="btn btn-primary btn-lg">
+            </div>
+          </div>
+          </form>
+
+        <script src="/javascripts/admin.js"></script>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+    </body>
+</html>

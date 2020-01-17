@@ -3,6 +3,6 @@ services:
   app:
     build: .
     volumes: 
-      - ./:/app
+      - ./app:/app
     ports:
       - 7000:7000

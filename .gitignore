@@ -1,2 +1,4 @@
 sample/
-
+./data.json
+*.aep
+ver*/

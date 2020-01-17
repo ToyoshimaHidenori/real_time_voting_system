@@ -1,0 +1,33 @@
+{
+  "name": "real_time_voting_system",
+  "version": "0.2.0",
+  "private": true,
+  "engines": {
+    "node": "12.13.0"
+  },
+  "description": "node.js+express+socket.ioでリアルタイム投票システムを作成する",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ToyoshimaHidenori/real_time_votiong_system.git"
+  },
+  "author": "ToyoshimaHidenori",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ToyoshimaHidenori/real_time_votiong_system/issues"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jquery": "^3.4.1",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.4",
+    "socket.io": "^2.3.0"
+  }
+}
