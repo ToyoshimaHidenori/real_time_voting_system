@@ -42,18 +42,8 @@ function rewriteGraph(){
   $('#num_deny').text(num_deny);
   $('#bar_accept').attr({
     'aria-valuenow': num_accept,
-<<<<<<< HEAD
     'aria-valuemax': num_attending_user,
     'style': "width: "+num_accept*100/num_attending_user+"%"
-  });
-  rewriteResult();
-=======
-<<<<<<< Updated upstream
-    'aria-valuemax': num_attending_user
-  });
-=======
-    'aria-valuemax': num_attending_user,
-    'style': "width: "+num_accept*100.0/num_attending_user+"%"
   });
   $('#bar_accept').text("承認  :"+num_accept);
   $('#bar_blank').attr({
@@ -69,8 +59,6 @@ function rewriteGraph(){
   });
   $('#bar_deny').text("否認  :"+num_deny);
   rewriteResult();
->>>>>>> Stashed changes
->>>>>>> develop
 }
 
 function rewritePreference(){
