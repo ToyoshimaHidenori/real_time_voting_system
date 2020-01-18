@@ -42,10 +42,6 @@ function rewriteGraph(){
   $('#num_deny').text(num_deny);
   $('#bar_accept').attr({
     'aria-valuenow': num_accept,
-<<<<<<< Updated upstream
-    'aria-valuemax': num_attending_user
-  });
-=======
     'aria-valuemax': num_attending_user,
     'style': "width: "+num_accept*100.0/num_attending_user+"%"
   });
@@ -63,7 +59,6 @@ function rewriteGraph(){
   });
   $('#bar_deny').text("否認  :"+num_deny);
   rewriteResult();
->>>>>>> Stashed changes
 }
 
 function rewritePreference(){

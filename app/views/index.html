@@ -14,13 +14,17 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <!-- アイコン -->
         <script src="https://kit.fontawesome.com/97ad166a09.js" crossorigin="anonymous"></script>
+        <!-- fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP:200&display=swap" rel="stylesheet">
+
         <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
         <title>承認会議</title>
     </head>
     <body>
         <div id="shutter1" class=""></div>
-        
-        <div class="container">
+
+        <div class="shutter-content">
             <div id="alert-1" class="lead"></div>
             <h1 id="voter">しばらくお待ちください</h1>
             <h2 id="is_accptd">投票中...</h2>
@@ -49,45 +53,47 @@
             <button type="button" class="btn btn-light" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">
                 <i class="fas fa-users-cog"></i> 再登録する</button>
         
-            <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">あなたの団体情報を入力してください</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form id="user_info_form" action="#">
-                            <div class="modal-body">  
-                                <div class="form-group">
-                                        <label for="user_name_input">団体名</label>
-                                        <input type="text" class="form-control" id="user_name_input" aria-describedby="団体名">
-                                        <small id="emailHelp" class="form-text text-muted">他団体と区別できる名前を登録してください。</small>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group flex-nowrap">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="addon-wrapping">@</span>
-                                        </div>
-                                        <input type="number" class="form-control" id="user_id" placeholder="団体番号を入力してください" aria-label="団体番号を入力してください" aria-describedby="addon-wrapping">
-                                    </div>
-                                    </div>
-                                </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                                <button type="button, submit" class="btn btn-primary">送信</button>
-                            </div>
-                        </form id="message_form" action="#">
-                    </div>
-                </div>
-            </div>
+            
 
             <ul id="messages"></ul>
 
             <form id="message_form" action="#">
             <input id="input_msg" autocomplete="off" /><button>送信</button>
             </form>
+        </div>
+
+        <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">あなたの団体情報を入力してください</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="user_info_form" action="#">
+                        <div class="modal-body">  
+                            <div class="form-group">
+                                    <label for="user_name_input">団体名</label>
+                                    <input type="text" class="form-control" id="user_name_input" aria-describedby="団体名">
+                                    <small id="emailHelp" class="form-text text-muted">他団体と区別できる名前を登録してください。</small>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group flex-nowrap">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="addon-wrapping">@</span>
+                                    </div>
+                                    <input type="number" class="form-control" id="user_id" placeholder="団体番号を入力してください" aria-label="団体番号を入力してください" aria-describedby="addon-wrapping">
+                                </div>
+                                </div>
+                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                            <button type="button, submit" class="btn btn-primary">送信</button>
+                        </div>
+                    </form id="message_form" action="#">
+                </div>
+            </div>
         </div>
         <script src="javascripts/index.js"></script>
 
