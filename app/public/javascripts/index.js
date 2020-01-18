@@ -101,6 +101,7 @@ function rewrite() {
 
 function init() {
   $('.modal').modal('show');
+  $('#shutter1').html('<div class="shutter"></div>');
 }
 
 function login() {
@@ -143,6 +144,8 @@ function nextVoter() {
   has_result=false;
   is_accepted=false;
   is_voting=true;
+  $('.shutter').remove();
+  $('#shutter1').html('<h1 class="shutter group">Next: '+voter_name+'</h1>');
   rewrite();
 }
 
