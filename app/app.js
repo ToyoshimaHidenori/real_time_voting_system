@@ -42,17 +42,26 @@ var voter_name="準備中";
 var user_names={};
 var user_is_accepting=[];
 
+function nextVoter() {
+    is_voting=true;
+    num_accept=0;
+    num_deny=0;
+    has_result=false;
+    is_accepted=false;
+}
+
 
 //socket.io(file切り分けるべき)
 io.on('connection',function(socket){
-  console.log('connected');
+  console.log(socket.id+':connected');
+
   socket.on('message',function(msg){
-      console.log('message: ' + msg);
       io.emit('message', msg);
   });
+
   socket.on('num_attendees',function(num_attendees){      
       num_attending_user=num_attendees;
-      io.emit('message', num_attending_user);
+      io.emit('num_attendees', num_attending_user);
       console.log('出席数は ' + num_attending_user);
   });
 
@@ -85,15 +94,11 @@ io.on('connection',function(socket){
   });
 
   socket.on('voter',function(vtr){
-      is_voting=true;
-      voter_name=vtr;
-      num_accept=0;
-      num_deny=0;
-      is_accepted=false;
-      console.log('now voted: ' + voter_name);
-      io.emit('voter', voter_name);
+    voter_name=vtr;
+    nextVoter();
+    console.log('now voted: ' + voter_name);
+    io.emit('voter', voter_name);
   });
-  
 });
 
 
