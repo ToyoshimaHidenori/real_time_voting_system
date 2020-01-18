@@ -48,6 +48,8 @@ function nextVoter() {
     num_deny=0;
     has_result=false;
     is_accepted=false;
+    io.emit('num_accept', num_accept);
+    io.emit('num_deny', num_deny);
 }
 
 

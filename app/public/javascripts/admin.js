@@ -22,7 +22,7 @@ var is_voting=false;
 
 function rewriteResult() {
   if(has_result){
-    if(is_accptd){
+    if(is_accepted){
       $('#is_accptd').text('承認されました');
     }else{
       $('#is_accptd').text('否認されました');
@@ -42,8 +42,10 @@ function rewriteGraph(){
   $('#num_deny').text(num_deny);
   $('#bar_accept').attr({
     'aria-valuenow': num_accept,
-    'aria-valuemax': num_attending_user
+    'aria-valuemax': num_attending_user,
+    'style': "width: "+num_accept*100/num_attending_user+"%"
   });
+  rewriteResult();
 }
 
 function rewritePreference(){
@@ -112,6 +114,7 @@ $(function(){
 
   socketio.on('is_accepted',function(is_accptd){
     is_accepted=is_accptd;
+    has_result=true;
     rewriteResult();
     return false;
   });
