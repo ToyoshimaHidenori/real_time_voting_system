@@ -14,6 +14,31 @@
         <!-- opening animation -->
         <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="./opening.css">
+        <style type="text/css">
+          .bar-step {
+              position:absolute;
+              margin-top:-28px;
+            z-index:1;
+              font-size:16px;
+          }
+
+          .label-txt {
+              float: left;
+          }
+
+          .label-line {
+              float: right;
+              background: #000;
+              height:100px;
+            width:1px;
+              margin-left: 5px;
+          }
+
+          .label-percent {
+              float: right;
+              margin-left: 5px;   
+          }
+        </style>
         <title>発表用</title>
     </head>
     <body>
@@ -24,8 +49,15 @@
         <h2 id="is_accptd"></h2>
         <h2>賛成団体数</h2>
         <h3 id="num_accept">0</h3>
-        <div class="progress">
-          <div id="bar_accept" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+        <div class="progress" style="height: 60px">
+          <div class="bar-step" style="left: 66.6666%">
+            <div class="label-txt">承認ボーダー</div>
+            <div class="label-percent">2/3</div>
+            <div class="label-line"></div>
+          </div>
+          <div id="bar_accept" class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+          <div id="bar_blank" class="progress-bar bg-light " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+          <div id="bar_deny" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
         </div>
         <h2>反対団体数</h2>
         <h3 id="num_deny">0</h3>
