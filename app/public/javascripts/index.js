@@ -70,6 +70,14 @@ function rewriteResult() {
   return false;
 }
 
+function rewriteCard(){
+  if($("input[name='votes']:checked").val()=='accept'){
+    setAcceptCard();
+  }else{
+    setDenyCard();
+  }
+}
+
 
 function rewriteGraph() {
   $('#num_accpt').text(num_accept);
@@ -99,6 +107,7 @@ function rewriteGraph() {
 
 function rewritePreference(){
   $('#voter').text("現在の発表者は"+voter_name); 
+  rewriteCard();
 }
 
 function rewrite() {
@@ -137,6 +146,7 @@ function login() {
 
   $('#user_id').val('');
   $('#input_name_input').val('');
+  rewriteCard();
   return false;
 }
 
