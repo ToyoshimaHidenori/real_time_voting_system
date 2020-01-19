@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="ja">
     <head>
+        
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,103 +14,114 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <!-- アイコン -->
         <script src="https://kit.fontawesome.com/97ad166a09.js" crossorigin="anonymous"></script>
-        
-        <style type="text/css">
-            .bar-step {
-                position:absolute;
-                margin-top:-28px;
-              z-index:1;
-                font-size:16px;
-            }
-  
-            .label-txt {
-                float: left;
-            }
-  
-            .label-line {
-                float: right;
-                background: #000;
-                height:100px;
-              width:1px;
-                margin-left: 5px;
-            }
-  
-            .label-percent {
-                float: right;
-                margin-left: 5px;   
-            }
-          </style>
+        <!-- fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP:200&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
         <title>承認会議</title>
     </head>
     <body>
-        <div id="alert-1" class="lead"></div>
-        <h1 id="voter">しばらくお待ちください</h1>
-        <h2 id="is_accptd">投票中...</h2>
-        <div class="progress" style="height: 60px">
-            <div class="bar-step" style="left: 66.6666%">
-              <div class="label-txt">承認ボーダー</div>
-              <div class="label-percent">2/3</div>
-              <div class="label-line"></div>
-            </div>
-            <div id="bar_accept" class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-            <div id="bar_blank" class="progress-bar bg-light " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-            <div id="bar_deny" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-          </div>
-        <form id="ballot_form" action="#">
-            <div id="ballot" class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary">
-                  <input type="radio" name="votes" id="option1" value="accept" checked> 承認
-                </label>
-                <label class="btn btn-secondary">
-                  <input type="radio" name="votes" id="option2" value="deny"> 否認
-                </label>
-            </div>
-            <button type="button, submit" id="vote_submit" class="btn btn-primary btn-lg">送信</button>
-        </form>
+        <div class="container">
 
-        <button type="button" class="btn btn-light" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">
-            <i class="fas fa-users-cog"></i> 再登録する</button>
-    
-        <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">あなたの団体情報を入力してください</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form id="user_info_form" action="#">
-                        <div class="modal-body">  
-                            <div class="form-group">
-                                    <label for="user_name_input">団体名</label>
-                                    <input type="text" class="form-control" id="user_name_input" aria-describedby="団体名">
-                                    <small id="emailHelp" class="form-text text-muted">他団体と区別できる名前を登録してください。</small>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group flex-nowrap">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrapping">@</span>
-                                    </div>
-                                    <input type="number" class="form-control" id="user_id" placeholder="団体番号を入力してください" aria-label="団体番号を入力してください" aria-describedby="addon-wrapping">
-                                </div>
-                                </div>
-                            </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                            <button type="button, submit" class="btn btn-primary">送信</button>
+            <div id="shutter1" class=""></div>
+
+            <div class="shutter-content">
+                <nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                </nav>
+                <div id="alert-1" class="lead"></div>
+
+                <div class="container mb-5">
+                    <div class="card border-light shadow ">
+                        
+                        <div class="card-body">
+                        <div id="voter" class="lead">しばらくお待ちください </div>
+                        <h2 id="is_accptd" class="card-title text-left">投票中...</h2>
+                        <p class="card-text"><div class="progress" style="height: 60px">
+                            <!-- <div class="bar-step" style="left: 66.6666%">
+                            <div class="label-txt">承認ボーダー</div>
+                            <div class="label-percent">2/3</div>
+                            <div class="label-line"></div>
+                            </div> -->
+                            <div id="bar_accept" class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                            <div id="bar_blank" class="progress-bar bg-light " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                            <div id="bar_deny" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div></p>
                         </div>
-                    </form id="message_form" action="#">
+                    </div>
+                </div>
+                
+                <div class="container">
+                    <div id="card-case" class="font-italic font-weight-bold">
+                        <div id="ballot_card" class="card border-dark mb-3 ml-3 mr-3 mt-3 shadow-lg ">
+                            <div class="card-body text-dark">
+                            <h5 class="card-title">To 団体A</h5>
+                            <p class="card-text">承認します。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="ballot_form" class="" action="#">
+                        <div id="ballot" class="btn-group btn-group-toggle shadow ml-3 mb-3 mt-3 mr-5" data-toggle="buttons">
+                            <label class="btn btn-lg btn-outline-success">
+                            <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" checked> <i class="fas fa-thumbs-up"></i>承認
+                            </label>
+                            <label class="btn btn-lg btn-outline-danger">
+                            <input type="radio" name="votes" id="option2" value="deny" onchange="setDenyCard()"> <i class="fas fa-thumbs-down"></i>否認
+                            </label>
+                        </div>
+                        <button type="button, submit" id="vote_submit" class="btn shadow  mb-3 ml-3 mr-3 mt-3 btn-lg btn-primary"><i class="fas fa-paper-plane"></i>送信</button>
+                    </form>
+                </div>
+
+                <div class="container">
+                <button type="button" class="btn btn-light shadow-sm  mb-5 mt-5" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">
+                    <i class="fas fa-users-cog"></i> 再登録する</button>
+                </div>
+                
+
+                <ul id="messages"></ul>
+
+                <form id="message_form" action="#">
+                <input id="input_msg" autocomplete="off" /><button><i class="fas fa-paper-plane"></i>送信</button>
+                </form>
+            </div>
+
+            <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">あなたの団体情報を入力してください</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="user_info_form" action="#">
+                            <div class="modal-body">  
+                                <div class="form-group">
+                                        <label for="user_name_input">団体名</label>
+                                        <input type="text" class="form-control" id="user_name_input" placeholder="(例)総部会" aria-label="(例)総部会" aria-describedby="団体名">
+                                        <small  class="form-text text-muted">他団体と区別できる名前を登録してください。</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="user_id_input">団体番号</label>
+                                    <div class="input-group flex-nowrap">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="addon-wrapping">@</span>
+                                        </div>
+                                        <input type="number" class="form-control" id="user_id" placeholder="団体番号を入力してください" aria-label="団体番号を入力してください" aria-describedby="addon-wrapping">
+                                    </div>
+                                    <small class="form-text text-muted">通知された番号を入力してください。</small>
+                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                                <button type="button, submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i>送信</button>
+                            </div>
+                        </form id="message_form" action="#">
+                    </div>
                 </div>
             </div>
         </div>
-
-        <ul id="messages"></ul>
-
-        <form id="message_form" action="#">
-          <input id="input_msg" autocomplete="off" /><button>送信</button>
-        </form>
-        
         <script src="javascripts/index.js"></script>
 
         <!-- Optional JavaScript -->

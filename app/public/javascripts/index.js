@@ -24,7 +24,15 @@ var is_voting=false;
 document.cookie = 'user_id=0';
 document.cookie = 'user_name=匿名団体';
 
+function setAcceptCard(){
+  $('#ballot_card').remove();
+  $('#card-case').html('<div id="ballot_card" class="card border-success mb-3 ml-3 mr-3 mt-3 shadow-lg "><div class="card-body text-success"><h5 class="card-title">To '+voter_name+'</h5><p class="text-center card-text">承認します。</p><p class="text-right card-text">From '+user_name+'</p></div></div>');
+}
 
+function setDenyCard(){
+  $('#ballot_card').remove();
+  $('#card-case').html('<div id="ballot_card" class="card border-danger mb-3 ml-3 mr-3 mt-3 shadow-lg "><div class="card-body text-danger"><h5 class="card-title">To '+voter_name+'</h5><p class="text-center card-text">否認します。</p><p class="text-right card-text">From '+user_name+'</p></div></div>');
+}
 
 function alert(msg) {
     return $('<div class="alert" role="alert"></div>')
@@ -100,7 +108,14 @@ function rewrite() {
 }
 
 function init() {
-  $('.modal').modal('show');
+//   $(window).on('touchmove.noScroll', function(e) {
+//     e.preventDefault();
+//   });
+  setAcceptCard();
+  $('#shutter1').html('<h1 class="shutter text-nowrap shuttertext" shutter_content="ようこそ、承認会議へ"></h1>');
+  setTimeout(function(){
+    $('.modal').modal('show');
+  },2000);
 }
 
 function login() {
@@ -143,6 +158,8 @@ function nextVoter() {
   has_result=false;
   is_accepted=false;
   is_voting=true;
+  $('.shutter').remove();
+  $('#shutter1').html('<h1 class="shutter shuttertext text-nowrap" shutter_content="'+voter_name+'"></h1>');
   rewrite();
 }
 
