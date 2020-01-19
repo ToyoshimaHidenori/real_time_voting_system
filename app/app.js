@@ -38,9 +38,22 @@ var num_accept=0;
 var num_deny=0;
 var is_voting=false;
 var is_accepted=false;
+var has_result=false;
 var voter_name="準備中";
 var user_names={};
 var user_is_accepting=[];
+
+app.get('/api/v1/init/',function(req,res){
+  res.json({
+      "num_voter": num_attending_user,
+      "num_accept": num_accept,
+      "num_deny": num_deny,
+      "voter_name": voter_name,
+      "has_result":  has_result,
+      "is_voting": is_voting,
+      "is_accepted": is_accepted
+  });
+});
 
 function nextVoter() {
     is_voting=true;
@@ -75,7 +88,8 @@ io.on('connection',function(socket){
           num_accept++;
           if(num_accept>(num_attending_user*2/3)){
               console.log('accepted');
-              var is_accepted=true;
+              is_accepted=true;
+              has_result=true;
               io.emit('is_accepted',is_accepted);
           }
       }else{
@@ -83,7 +97,8 @@ io.on('connection',function(socket){
           user_is_accepting[vote_info[1]]=false;
           if(num_deny>(num_attending_user*1/3)){
               console.log('deny');
-              var is_accepted=false;
+              is_accepted=false;
+              has_result=true;
               io.emit('is_accepted',is_accepted);
           }
       }
