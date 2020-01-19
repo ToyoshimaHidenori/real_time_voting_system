@@ -54,11 +54,15 @@ return alert(msg)
 
 
 function rewriteResult() {
+  $('#is_accptd').removeClass("text-success");
+  $('#is_accptd').removeClass("text-danger");
   if(has_result){
-    if(is_accptd){
+    if(is_accepted){
       $('#is_accptd').text('承認されました');
+      $('#is_accptd').addClass("text-success");
     }else{
       $('#is_accptd').text('否認されました');
+      $('#is_accptd').addClass("text-danger");
     }
   }else{
     if(is_voting){
@@ -193,6 +197,7 @@ $(function(){
 
   socketio.on('is_accepted',function(is_accptd){
     is_accepted=is_accptd;
+    has_result=true;
     rewriteResult();
     return false;
   });
@@ -216,6 +221,7 @@ $(function(){
   });
   socketio.on('num_voter',function(num_vtr){
     num_attending_user=num_vtr;
+    rewrite();
     return false;
   });
 

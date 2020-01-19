@@ -63,7 +63,7 @@ io.on('connection',function(socket){
 
   socket.on('num_attendees',function(num_attendees){      
       num_attending_user=num_attendees;
-      io.emit('num_attendees', num_attending_user);
+      io.emit('num_voter', num_attending_user);
       console.log('出席数は ' + num_attending_user);
   });
 
