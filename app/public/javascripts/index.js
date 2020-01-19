@@ -1,5 +1,4 @@
 var socketio = io();
-
 //user info
 var user_name="匿名";
 var user_id=-1;
@@ -124,7 +123,24 @@ function init() {
 //   $(window).on('touchmove.noScroll', function(e) {
 //     e.preventDefault();
 //   });
-  setAcceptCard();
+
+  var request = new XMLHttpRequest();
+  request.open('GET', '/api/v1/init/', true);
+  request.responseType = 'json';
+  request.onload = function () {
+    var data = this.response;
+    num_attending_user=data.init_num_voter;
+    num_accept=data.init_num_accept;
+    num_deny= data.init_num_deny;
+    voter_name= data.init_voter_name;
+    has_result=data.init_has_result;
+    is_voting = data.init_is_voting;
+    is_accepted=data.init_is_accepted;
+    console.log(data);
+    console.log(data.init_voter_name);
+    rewrite();
+  };
+  request.send();
   $('#shutter1').html('<h1 class="shutter text-nowrap shuttertext" shutter_content="ようこそ、承認会議へ"></h1>');
   setTimeout(function(){
     $('.modal').modal('show');
@@ -150,7 +166,7 @@ function login() {
 
   $('#user_id').val('');
   $('#input_name_input').val('');
-  rewriteCard();
+  rewrite();
   return false;
 }
 

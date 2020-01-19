@@ -45,13 +45,13 @@ var user_is_accepting=[];
 
 app.get('/api/v1/init/',function(req,res){
   res.json({
-      "num_voter": num_attending_user,
-      "num_accept": num_accept,
-      "num_deny": num_deny,
-      "voter_name": voter_name,
-      "has_result":  has_result,
-      "is_voting": is_voting,
-      "is_accepted": is_accepted
+      "init_num_voter": num_attending_user,
+      "init_num_accept": num_accept,
+      "init_num_deny": num_deny,
+      "init_voter_name": voter_name,
+      "init_has_result":  has_result,
+      "init_is_voting": is_voting,
+      "init_is_accepted": is_accepted
   });
 });
 
