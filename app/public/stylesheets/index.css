@@ -1,7 +1,6 @@
 body {
   background-color: #fafafa;
   color: #333;
-  text-align: center;
 }
 
 .shuttertext {
@@ -113,7 +112,10 @@ body {
     transform: scale(1) ;
   }
 }
-
+/* card */
+#card-case {
+  font-family: "Sawarabi Mincho", 'Noto Serif JP', serif;
+}
 
 /* graph */
 .bar-step {
