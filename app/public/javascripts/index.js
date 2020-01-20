@@ -41,7 +41,6 @@ function userStatus(input_user_id){
     var datastr = this.response;
     var data=JSON.parse(datastr);
     user_status=data.status;
-    socketio.emit('message',user_status);
   };
   requestst.send();
   return user_status;
@@ -141,6 +140,36 @@ function rewriteCard(){
   }
 }
 
+function writeCardBlur(){
+  $('#disable_text').addClass("disable_text");
+  $('#disable_textp').text("投票する場合は、団体を登録してください");
+  $('#disable_box').addClass("disable_box");
+}
+
+function removeCardBlur(){
+  $('#disable_text').removeClass("disable_text");
+  $('#disable_textp').text("");
+  $('#disable_box').removeClass("disable_box");
+}
+
+function rewriteCardAvalability(){
+  if(userStatus(user_id)=='rejected'){
+    writeCardBlur();
+    $('#vote_submit').prop('disabled', true);
+  }else{
+    removeCardBlur();
+    if(userStatus(user_id)=='ready'){
+      if(is_voting){
+        $('#vote_submit').prop('disabled', false);
+      }else{
+        $('#vote_submit').prop('disabled', true);
+      }
+    }else{
+      $('#vote_submit').prop('disabled', true);
+    }
+  }
+}
+
 
 function rewriteGraph() {
   $('#num_accpt').text(num_accept);
@@ -181,7 +210,7 @@ function rewritePreference(){
 }
 
 function rewrite() {
-  userStatus(user_id);
+  rewriteCardAvalability();
   rewriteResult();
   rewriteGraph();
   rewritePreference();
@@ -209,8 +238,6 @@ function init() {
     is_voting = data.init_is_voting;
     is_accepted=data.init_is_accepted;
     event_name=data.init_event_name;
-    console.log(data);
-    console.log(data.init_voter_name);
     rewrite();
   };
   request.send();
@@ -332,7 +359,7 @@ $(function(){
 
 // デバッグ用メッセージ機能
   $('#message_form').submit(function(){
-    socketio.emit('message', $('#input_msg').val());
+    socketio.emit('message', user_name+": "+$('#input_msg').val());
     $('#input_msg').val('');
     return false;
   });

@@ -3,6 +3,8 @@ body {
   color: rgba(0, 0, 0, 0.719);
 }
 
+
+
 .shuttertext {
   z-index: 10000;
   color: rgb(255, 255, 255);
@@ -140,4 +142,23 @@ body {
 .label-percent {
   float: right;
   margin-left: 5px;
+}
+/* 使用不可ぼかし */
+.disable_box {
+  z-index: 100;
+  -ms-filter: blur(6px);
+  filter: blur(6px);
+}
+.disable_text{
+  position: relative;
+}
+.disable_textp{
+  position:absolute;
+  top: 0;
+  left:0;
+  bottom:0;
+  margin:auto;
+  width:90%;
+  height:0;
+  z-index: 1000;
 }

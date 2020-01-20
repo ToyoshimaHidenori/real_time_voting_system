@@ -54,40 +54,46 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="container">
-                    <div id="card-case" class="font-italic font-weight-bold">
-                        <div id="ballot_card" class="card border-dark mb-3 ml-3 mr-3 mt-3 shadow-lg ">
-                            <div class="card-body text-dark">
-                            <h5 class="card-title">To 団体A</h5>
-                            <p class="card-text">承認します。</p>
+                <div id="disable_text" class="disable_text container">
+                    <p id="disable_textp" class="disable_textp text-wrap h5">投票する場合は、団体を登録してください</p>
+                    <div id="disable_box" class="disable_box">
+                        <div id="card-case" class="font-italic font-weight-bold">
+                            <div id="ballot_card" class="card border-dark mb-3 ml-3 mr-3 mt-3 shadow-lg ">
+                                <div class="card-body text-dark">
+                                <h5 class="card-title">To 団体A</h5>
+                                <p class="card-text">承認します。</p>
+                                </div>
                             </div>
                         </div>
+                        <form id="ballot_form" class="" action="#">
+                            <div id="ballot" class="btn-group btn-group-toggle shadow ml-3 mb-3 mt-3 mr-5" data-toggle="buttons">
+                                <label class="btn btn-lg btn-outline-success">
+                                <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" checked> <i class="fas fa-thumbs-up"></i> 承認
+                                </label>
+                                <label class="btn btn-lg btn-outline-danger">
+                                <input type="radio" name="votes" id="option2" value="deny" onchange="setDenyCard()"> <i class="fas fa-thumbs-down"></i> 否認
+                                </label>
+                            </div>
+                            <button type="button, submit" id="vote_submit" class="btn shadow rounded-circle  mb-3 ml-3 mr-3 mt-3 btn-lg btn-light"><i class="fas fa-paper-plane"></i> 送信</button>
+                        </form>
                     </div>
-                    <form id="ballot_form" class="" action="#">
-                        <div id="ballot" class="btn-group btn-group-toggle shadow ml-3 mb-3 mt-3 mr-5" data-toggle="buttons">
-                            <label class="btn btn-lg btn-outline-success">
-                            <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" checked> <i class="fas fa-thumbs-up"></i> 承認
-                            </label>
-                            <label class="btn btn-lg btn-outline-danger">
-                            <input type="radio" name="votes" id="option2" value="deny" onchange="setDenyCard()"> <i class="fas fa-thumbs-down"></i> 否認
-                            </label>
-                        </div>
-                        <button type="button, submit" id="vote_submit" class="btn shadow rounded-circle  mb-3 ml-3 mr-3 mt-3 btn-lg btn-light"><i class="fas fa-paper-plane"></i> 送信</button>
-                    </form>
                 </div>
-
                 <div class="container">
                 <button type="button" class="btn btn-light shadow-sm  mb-5 mt-5" data-toggle="modal" data-target="#input_user_info" data-whatever="登録" show="true">
                     <i class="fas fa-users-cog"></i> 再登録する</button>
                 </div>
                 
 
-                <ul id="messages"></ul>
-
-                <form id="message_form" action="#">
-                <input id="input_msg" autocomplete="off" /><button><i class="fas fa-paper-plane"></i>送信</button>
+                
+                <form id="message_form" class="form-inline" action="#">
+                    <div class="form-group mx-sm-3 mb-2">
+                      <label  class="sr-only">不具合等のメッセージ</label>
+                      <input id="input_msg" type="text" class=" shadow-sm form-control" placeholder="不具合等のメッセージ">
+                    </div>
+                    <button type="submit"  class="btn  shadow-sm btn-light mb-2"><i class="fas fa-paper-plane"></i> 送信</button>
                 </form>
+
+                <ul id="messages"></ul>
             </div>
 
             <div class="modal fade" id="input_user_info" tabindex="-1" role="dialog"  aria-hidden="true" >
