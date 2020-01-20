@@ -23,6 +23,7 @@ var is_voting=false;
 document.cookie = 'user_id=0';
 document.cookie = 'user_name=匿名団体';
 
+
 function setAcceptCard(){
   $('#ballot_card').remove();
   $('#card-case').html('<div id="ballot_card" class="card border-success mb-3 ml-3 mr-3 mt-3 shadow-lg "><div class="card-body text-success"><h5 class="card-title">To '+voter_name+'</h5><p class="text-center card-text">承認します。</p><p class="text-right card-text">From '+user_name+'</p></div></div>');
@@ -90,19 +91,21 @@ function rewriteGraph() {
     'aria-valuemax': num_attending_user,
     'style': "width: "+num_accept*100.0/num_attending_user+"%"
   });
-  $('#bar_accept').text("承認  :"+num_accept);
+  $('#bar_accept').text("承認: "+num_accept);
+
   $('#bar_blank').attr({
     'aria-valuenow': num_accept,
     'aria-valuemax': num_attending_user,
     'style': "width: "+(num_attending_user-num_accept-num_deny)*100.0/num_attending_user+"%"
   });
+  $('#bar_blank').text("未投票: "+(num_attending_user-num_accept-num_deny));
 
   $('#bar_deny').attr({
     'aria-valuenow': num_deny,
     'aria-valuemax': num_attending_user,
     'style': "width: "+num_deny*100.0/num_attending_user+"%"
   });
-  $('#bar_deny').text("否認  :"+num_deny);
+  $('#bar_deny').text("否認: "+num_deny);
 
   rewriteResult();
   return false;
@@ -141,7 +144,7 @@ function init() {
     rewrite();
   };
   request.send();
-  $('#shutter1').html('<h1 class="shutter text-nowrap shuttertext" shutter_content="ようこそ、承認会議へ"></h1>');
+  $('#shutter1').html('<h1 class="shutter text-nowrap shuttertext" shutter_content="ようこそ、'+event_name+'へ"></h1>');
   setTimeout(function(){
     $('.modal').modal('show');
   },2000);

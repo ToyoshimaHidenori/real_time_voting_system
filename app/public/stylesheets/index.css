@@ -1,6 +1,6 @@
 body {
   background-color: #fafafa;
-  color: #333;
+  color: rgba(0, 0, 0, 0.719);
 }
 
 .shuttertext {
@@ -13,7 +13,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #1e1e1e;
+  background-color: #ffffff;
   z-index: 9999;
   animation: byeShutter 2s forwards;
 }
@@ -27,8 +27,8 @@ body {
   left:0;
   bottom:0;
   margin:auto;
-  color: #c6ffc6;
-  background-color:#4fa573;
+  color: #1e741e;
+  background-color:#adcc63;
   width:0;
   height:1px;
   animation: shutterOpen 2.6s forwards;

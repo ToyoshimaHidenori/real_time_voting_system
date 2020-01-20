@@ -30,13 +30,13 @@
             <div id="shutter1" class=""></div>
 
             <div class="shutter-content">
-                <nav class="navbar navbar-light bg-light">
-                    <a class="navbar-brand" href="#">Navbar</a>
+                <nav class="navbar navbar-light  bg-light">
+                    <a class="navbar-brand " href="#"></a>
                 </nav>
                 <div id="alert-1" class="lead"></div>
 
                 <div class="container mb-5">
-                    <div class="card border-light shadow ">
+                    <div class="card border-light shadow rounded">
                         
                         <div class="card-body">
                         <div id="voter" class="lead">しばらくお待ちください </div>
@@ -48,7 +48,7 @@
                             <div class="label-line"></div>
                             </div> -->
                             <div id="bar_accept" class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
-                            <div id="bar_blank" class="progress-bar bg-light " role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                            <div id="bar_blank" class="progress-bar bg-light text-dark" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%">未投票 :</div>
                             <div id="bar_deny" class="progress-bar bg-danger progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                         </div></p>
                         </div>
@@ -67,13 +67,13 @@
                     <form id="ballot_form" class="" action="#">
                         <div id="ballot" class="btn-group btn-group-toggle shadow ml-3 mb-3 mt-3 mr-5" data-toggle="buttons">
                             <label class="btn btn-lg btn-outline-success">
-                            <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" checked> <i class="fas fa-thumbs-up"></i>承認
+                            <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" checked> <i class="fas fa-thumbs-up"></i> 承認
                             </label>
                             <label class="btn btn-lg btn-outline-danger">
-                            <input type="radio" name="votes" id="option2" value="deny" onchange="setDenyCard()"> <i class="fas fa-thumbs-down"></i>否認
+                            <input type="radio" name="votes" id="option2" value="deny" onchange="setDenyCard()"> <i class="fas fa-thumbs-down"></i> 否認
                             </label>
                         </div>
-                        <button type="button, submit" id="vote_submit" class="btn shadow  mb-3 ml-3 mr-3 mt-3 btn-lg btn-primary"><i class="fas fa-paper-plane"></i>送信</button>
+                        <button type="button, submit" id="vote_submit" class="btn shadow rounded-circle  mb-3 ml-3 mr-3 mt-3 btn-lg btn-light"><i class="fas fa-paper-plane"></i> 送信</button>
                     </form>
                 </div>
 
@@ -118,7 +118,7 @@
                                 </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-                                <button type="button, submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i>送信</button>
+                                <button type="button, submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> 送信</button>
                             </div>
                         </form id="message_form" action="#">
                     </div>
