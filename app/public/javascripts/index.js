@@ -6,7 +6,7 @@ var user_password="";
 var is_login_user=false;
 
 //event info
-var event_name="承認会議";
+var event_name="投票システム";
 
 //voter info
 var voter_name="匿名団体";
@@ -23,6 +23,13 @@ var is_voting=false;
 document.cookie = 'user_id=0';
 document.cookie = 'user_name=匿名団体';
 
+function auth(user_id){
+  if((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999)||user_id===-1){
+    return true;
+  }else{
+    return false;
+  }
+}
 
 function setAcceptCard(){
   $('#ballot_card').remove();
@@ -112,7 +119,12 @@ function rewriteGraph() {
 }
 
 function rewritePreference(){
-  $('#voter').text("現在の発表者は"+voter_name); 
+  if(is_voting){
+    $('#voter').text("現在の発表者は"+voter_name); 
+  }else{
+    $('#voter').text("しばらくお待ちください…"); 
+  }
+  
   rewriteCard();
 }
 
@@ -123,6 +135,10 @@ function rewrite() {
 }
 
 function init() {
+  $('#shutter1').html('<h1 class="shutter text-nowrap shuttertext" shutter_content="ようこそ、'+event_name+'へ"></h1>');
+  setTimeout(function(){
+    $('.modal').modal('show');
+  },2000);
 //   $(window).on('touchmove.noScroll', function(e) {
 //     e.preventDefault();
 //   });
@@ -139,19 +155,18 @@ function init() {
     has_result=data.init_has_result;
     is_voting = data.init_is_voting;
     is_accepted=data.init_is_accepted;
+    event_name=data.init_event_name;
     console.log(data);
     console.log(data.init_voter_name);
     rewrite();
   };
   request.send();
-  $('#shutter1').html('<h1 class="shutter text-nowrap shuttertext" shutter_content="ようこそ、'+event_name+'へ"></h1>');
-  setTimeout(function(){
-    $('.modal').modal('show');
-  },2000);
+
 }
 
 function login() {
   socketio.emit('user_info', $('#user_id').val()+","+$('#user_name_input').val());
+  socketio.emit('login', $('#user_id').val(),$('#user_name_input').val());
   user_id=$('#user_id').val();
   user_name=$('#user_name_input').val();
 
@@ -160,21 +175,35 @@ function login() {
   $('.modal-backdrop').remove();       // 2
   $('#input_user_info').modal('hide'); 
 
-  // アラートを表示して、一定時間経過後消去する。
-  const e = alertWithCloseBtn(user_name+'として登録が完了しました！ 入力ありがとうございます。').addClass('alert-success');
-  $('#alert-1').append(e);
-  setTimeout(() => {
-      e.alert('close');
-  }, 5000);
+
+  if(auth(user_id)){
+     // アラートを表示して、一定時間経過後消去する。
+    const e = alertWithCloseBtn(user_name+'として登録が完了しました！ 入力ありがとうございます。').addClass('alert-success');
+    $('#alert-1').append(e);
+    setTimeout(() => {
+        e.alert('close');
+    }, 5000);
+    is_login_user=true;
+  }else{
+     
+    const e = alertWithCloseBtn(user_name+'として登録が失敗しました。正しい団体番号を入力して下さい。 ').addClass('alert-warning');
+    $('#alert-1').append(e);
+    setTimeout(() => {
+        e.alert('close');
+    }, 5000);
+    is_login_user=false;
+  }
+
 
   $('#user_id').val('');
   $('#input_name_input').val('');
   rewrite();
-  return false;
+  return true;
 }
 
+
 function vote() {
-  socketio.emit('vote', $("input[name='votes']:checked").val()+","+user_id);
+  socketio.emit('vote', $("input[name='votes']:checked").val(),user_id);
   $('#vote_submit').prop('disabled', true);
   const e = alertWithCloseBtn(voter_name+'への投票を送信しました。').addClass('alert-primary');
   $('#alert-1').append(e);
@@ -245,8 +274,9 @@ $(function(){
   });
 
   //event情報更新を実装する
-  socketio.on('event',function(event){
-    rewrite();
+  socketio.on('new_event',function(event){
+    event_name=event;
+    init();
     return false;
   });
 

@@ -40,6 +40,7 @@ var is_voting=false;
 var is_accepted=false;
 var has_result=false;
 var voter_name="準備中";
+var event_name="承認会議";
 var user_names={};
 var user_is_accepting=[];
 
@@ -51,9 +52,29 @@ app.get('/api/v1/init/',function(req,res){
       "init_voter_name": voter_name,
       "init_has_result":  has_result,
       "init_is_voting": is_voting,
-      "init_is_accepted": is_accepted
+      "init_is_accepted": is_accepted,
+      "init_event_name": event_name
   });
 });
+
+function auth(user_id){
+  if((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999)||user_id===-1){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+function new_event(){
+    is_voting=false;
+    num_accept=0;
+    num_deny=0;
+    has_result=false;
+    is_accepted=false;
+    voter_name="準備中";
+    user_names={};
+    io.emit('new_event', event_name);
+}
 
 function nextVoter() {
     is_voting=true;
@@ -74,17 +95,21 @@ io.on('connection',function(socket){
       io.emit('message', msg);
   });
 
+  socket.on('new_event',function(new_event_name){
+      event_name=new_event_name;
+      new_event();
+  });
+
   socket.on('num_attendees',function(num_attendees){      
       num_attending_user=num_attendees;
       io.emit('num_voter', num_attending_user);
       console.log('出席数は ' + num_attending_user);
   });
 
-  socket.on('vote',function(vote){
-      console.log('vote: ' + vote);
-      const vote_info = vote.split(",");
-      if(vote_info[0]=='accept'){
-          user_is_accepting[vote_info[1]]=true;
+  socket.on('vote',function(vote, user_id){
+      if(auth(user_id)){
+        if(vote=='accept'){
+          user_is_accepting[user_id]=true;
           num_accept++;
           if(num_accept>(num_attending_user*2/3)){
               console.log('accepted');
@@ -92,22 +117,38 @@ io.on('connection',function(socket){
               has_result=true;
               io.emit('is_accepted',is_accepted);
           }
-      }else{
+        }else{
           num_deny++;
-          user_is_accepting[vote_info[1]]=false;
+          user_is_accepting[user_id]=false;
           if(num_deny>(num_attending_user*1/3)){
               console.log('deny');
               is_accepted=false;
               has_result=true;
               io.emit('is_accepted',is_accepted);
           }
-      }
+        } 
       io.emit('num_accept', num_accept);
       io.emit('num_deny', num_deny);
+      console.log(user_id+':vote: ' + vote);
+      }else{
+        
+        console.log(user_id+':vote: ' + vote + 'rejected');
+      }
   });
 
   socket.on('user_info',function(usrinf){
       console.log('userinf: ' + usrinf);
+  });
+
+  socket.on('login',function(id,name){
+    if(auth(id)){
+      console.log(id+':success login: ' + name);
+      io.emit('login_success',id);
+      user_names[id] = name;
+    }else{
+      console.log(id+':failed login: ' + name);
+      io.emit('login_failed',id);
+    }
   });
 
   socket.on('voter',function(vtr){

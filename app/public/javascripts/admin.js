@@ -1,7 +1,7 @@
 var socketio = io();
 
 //user info
-var user_name="匿名";
+var user_name="未入力";
 var user_id=-1;
 var user_password="";
 var is_login_user=false;
@@ -10,7 +10,7 @@ var is_login_user=false;
 var event_name="承認会議";
 
 //voter info
-var voter_name="匿名団体";
+var voter_name="準備中";
 var num_attending_user=30;
 
 //voting info
@@ -108,6 +108,12 @@ function snedAllowedUserInfo() {
   
 }
 
+function sendNewEvent(){
+  event_name=$('#input_event').val();
+  $('#input_event').val('');
+  socketio.emit('new_event', event_name);
+};
+
 $(document).ready(function(){
   init();
   return false;
@@ -122,6 +128,11 @@ $(function(){
 
   $('#voters_form').submit(function(){
     sendNextVoter();
+    return false;
+  });
+
+  $('#new_event_form').submit(function(){
+    sendNewEvent();
     return false;
   });
 
