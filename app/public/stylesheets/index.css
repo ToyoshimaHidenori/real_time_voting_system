@@ -26,6 +26,7 @@ body {
   top:0;
   left:0;
   bottom:0;
+  font-size: x-large;
   margin:auto;
   color: #1e741e;
   background-color:#adcc63;
@@ -33,7 +34,6 @@ body {
   height:1px;
   animation: shutterOpen 2.6s forwards;
 }
-
 
 .shutter::after{
   content:"" ;

@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 //routing
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -43,7 +42,9 @@ var voter_name="準備中";
 var event_name="承認会議";
 var user_names={};
 var user_is_accepting=[];
+var user_status={};
 
+//api for init
 app.get('/api/v1/init/',function(req,res){
   res.json({
       "init_num_voter": num_attending_user,
@@ -57,11 +58,46 @@ app.get('/api/v1/init/',function(req,res){
   });
 });
 
+
 function auth(user_id){
-  if((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999)||user_id===-1){
+  if(((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999))||user_id===-3){
     return true;
   }else{
     return false;
+  }
+}
+
+//api for login
+app.get('/api/v1/status/:id',function(req,res){
+  if(user_status[req.params.id]){
+    res.json({"status" : user_status[req.params.id]});
+  }else if(auth(req.params.id)){
+    user_status[req.params.id] = "ready";
+    res.json({"status" : user_status[req.params.id]});
+  }else{
+    res.json({"status" : "rejected"});
+  }
+});
+
+app.get('/api/v1/status_all/',function(req,res){
+  res.json(user_status);
+});
+
+app.get('/api/v1/user_name/all/',function(req,res){
+  res.json(user_names);
+});
+
+
+
+
+function setUserStatusReady(){
+  const keys = Object.keys(user_status);
+  for (let i = 0; i < keys.length; i++) {
+    if (user_status[keys[i]] === 'voted_accept') {
+      user_status[keys[i]]='ready';
+    }else if(user_status[keys[i]] === 'voted_deny'){
+      user_status[keys[i]]='ready';
+    }
   }
 }
 
@@ -73,6 +109,7 @@ function new_event(){
     is_accepted=false;
     voter_name="準備中";
     user_names={};
+    user_status={};
     io.emit('new_event', event_name);
 }
 
@@ -84,6 +121,7 @@ function nextVoter() {
     is_accepted=false;
     io.emit('num_accept', num_accept);
     io.emit('num_deny', num_deny);
+    setUserStatusReady();
 }
 
 
@@ -107,11 +145,12 @@ io.on('connection',function(socket){
   });
 
   socket.on('vote',function(vote, user_id){
-      if(auth(user_id)){
+      if(user_status[user_id]==='ready'){
         if(vote=='accept'){
+          user_status[user_id]='voted_accept';
           user_is_accepting[user_id]=true;
           num_accept++;
-          if(num_accept>(num_attending_user*2/3)){
+          if(num_accept>=(num_attending_user*2/3)){
               console.log('accepted');
               is_accepted=true;
               has_result=true;
@@ -120,6 +159,7 @@ io.on('connection',function(socket){
         }else{
           num_deny++;
           user_is_accepting[user_id]=false;
+          user_status[user_id]='voted_deny';
           if(num_deny>(num_attending_user*1/3)){
               console.log('deny');
               is_accepted=false;
@@ -131,7 +171,6 @@ io.on('connection',function(socket){
       io.emit('num_deny', num_deny);
       console.log(user_id+':vote: ' + vote);
       }else{
-        
         console.log(user_id+':vote: ' + vote + 'rejected');
       }
   });
@@ -144,6 +183,11 @@ io.on('connection',function(socket){
     if(auth(id)){
       console.log(id+':success login: ' + name);
       io.emit('login_success',id);
+      if(user_status[id]){
+
+      }else{
+        user_status[id] = "ready";
+      }
       user_names[id] = name;
     }else{
       console.log(id+':failed login: ' + name);

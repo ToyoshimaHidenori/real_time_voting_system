@@ -18,18 +18,70 @@ var num_deny=0;
 var is_accepted=false;
 var has_result=false;
 var is_voting=false;
+var user_status="";
 
 //cookie info
 document.cookie = 'user_id=0';
 document.cookie = 'user_name=匿名団体';
 
 function auth(user_id){
-  if((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999)||user_id===-1){
+  if(((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999))||user_id===-3){
     return true;
   }else{
     return false;
   }
 }
+
+
+function userStatus(input_user_id){
+// function getUserStatus(input_user_id){
+  var requestst = new XMLHttpRequest();
+  requestst.open('GET', '/api/v1/status/'+input_user_id, false);
+  requestst.onload = function () {
+    var datastr = this.response;
+    var data=JSON.parse(datastr);
+    user_status=data.status;
+    socketio.emit('message',user_status);
+  };
+  requestst.send();
+  return user_status;
+}
+
+
+
+  // $.ajax({
+  //   type: "GET",
+  //   url: "/api/v1/status/"+input_user_id,
+  //   dataType:"json",
+  //   timespan:1000, 		// 通信のタイムアウトの設定(ミリ秒)
+  //   async   : true,
+  //   success : function(result) {
+  //     //成功時の処理
+  //     return result["state"];
+  //   }
+    // }
+		// // 2. doneは、通信に成功した時に実行される
+		// //  引数のdata1は、通信で取得したデータ
+		// //  引数のtextStatusは、通信結果のステータス
+		// //  引数のjqXHRは、XMLHttpRequestオブジェクト
+		// }).done(function(data1,textStatus,jqXHR) {
+		// 		user_status=data1["status"];
+    //     return "aaa"
+
+		// // 6. failは、通信に失敗した時に実行される
+		// }).fail(function(jqXHR, textStatus, errorThrown ) {
+		// 		return "ffff"
+
+		// // 7. alwaysは、成功/失敗に関わらず実行される
+		// }).always(function(){
+
+				
+	// });
+  // getUserStatus(input_user_id);
+  // return user_status;
+// }
+
+
 
 function setAcceptCard(){
   $('#ballot_card').remove();
@@ -129,6 +181,7 @@ function rewritePreference(){
 }
 
 function rewrite() {
+  userStatus(user_id);
   rewriteResult();
   rewriteGraph();
   rewritePreference();
@@ -161,7 +214,6 @@ function init() {
     rewrite();
   };
   request.send();
-
 }
 
 function login() {
@@ -175,8 +227,8 @@ function login() {
   $('.modal-backdrop').remove();       // 2
   $('#input_user_info').modal('hide'); 
 
-
-  if(auth(user_id)){
+  
+  if(userStatus(user_id)!='rejected'){
      // アラートを表示して、一定時間経過後消去する。
     const e = alertWithCloseBtn(user_name+'として登録が完了しました！ 入力ありがとうございます。').addClass('alert-success');
     $('#alert-1').append(e);
@@ -193,10 +245,6 @@ function login() {
     }, 5000);
     is_login_user=false;
   }
-
-
-  $('#user_id').val('');
-  $('#input_name_input').val('');
   rewrite();
   return true;
 }
