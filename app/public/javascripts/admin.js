@@ -20,6 +20,19 @@ var is_accepted=false;
 var has_result=false;
 var is_voting=false;
 
+function getUserInfo(){
+    var data=null;
+    var requestst = new XMLHttpRequest();
+    requestst.open('GET', '/api/v1/user_info', false);
+    requestst.onload = function () {
+      var datastr = this.response;
+      data=JSON.parse(datastr);
+      // data = datastr;
+    };
+    requestst.send();
+    return data;
+  }
+
 function rewriteResult() {
   if(has_result){
     if(is_accepted){
@@ -113,6 +126,26 @@ function sendNewEvent(){
   $('#input_event').val('');
   socketio.emit('new_event', event_name);
 };
+
+function rewriteUserInfo(){
+  var data=getUserInfo();
+  const keys = Object.keys(data);
+  var htmlstr="";
+  for (let i = 0; i < keys.length; i++) {
+    if(data[keys[i]]=='voted_accept'){
+      htmlstr=htmlstr+'<li class="list-group-item list-group-item-success">'+keys[i]+": "+data[keys[i]]+"</li>";
+    }else if(data[keys[i]]=='voted_deny'){
+      htmlstr=htmlstr+'<li class="list-group-item list-group-item-danger">'+keys[i]+": "+data[keys[i]]+"</li>";
+    }else{
+      htmlstr=htmlstr+'<li class="list-group-item">'+keys[i]+": "+data[keys[i]]+"</li>";
+    }
+  } 
+  $('#user_info').html(htmlstr);
+}
+
+document.getElementById("get_user_info").onclick = function(){
+  rewriteUserInfo();
+}
 
 $(document).ready(function(){
   init();

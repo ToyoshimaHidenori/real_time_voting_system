@@ -43,6 +43,7 @@ var event_name="承認会議";
 var user_names={};
 var user_is_accepting=[];
 var user_status={};
+var user_all_info={};
 
 //api for init
 app.get('/api/v1/init/',function(req,res){
@@ -58,12 +59,30 @@ app.get('/api/v1/init/',function(req,res){
   });
 });
 
+function setUserStatusReady(){
+  const keys = Object.keys(user_status);
+  for (let i = 0; i < keys.length; i++) {
+    if (user_status[keys[i]] === 'voted_accept') {
+      user_status[keys[i]]='ready';
+    }else if(user_status[keys[i]] === 'voted_deny'){
+      user_status[keys[i]]='ready';
+    }
+  }
+}
+
 
 function auth(user_id){
-  if(((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999))||user_id===-3){
+  if(((user_id%137===0)&&(user_id>=10000)&&(user_id<=99999))||user_id===-3){
     return true;
   }else{
     return false;
+  }
+}
+
+function updateUserAllInfo(){
+  const keys = Object.keys(user_status);
+  for (let i = 0; i < keys.length; i++) {
+    user_all_info[keys[i]+": "+user_names[keys[i]]]=user_status[keys[i]];
   }
 }
 
@@ -85,6 +104,11 @@ app.get('/api/v1/status_all/',function(req,res){
 
 app.get('/api/v1/user_name/all/',function(req,res){
   res.json(user_names);
+});
+
+app.get('/api/v1/user_info/',function(req,res){
+  updateUserAllInfo();
+  res.json(user_all_info);
 });
 
 

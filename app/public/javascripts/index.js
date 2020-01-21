@@ -24,14 +24,6 @@ var user_status="";
 document.cookie = 'user_id=0';
 document.cookie = 'user_name=匿名団体';
 
-function auth(user_id){
-  if(((user_id%13===0)&&(user_id>=10000)&&(user_id<=99999))||user_id===-3){
-    return true;
-  }else{
-    return false;
-  }
-}
-
 
 function userStatus(input_user_id){
 // function getUserStatus(input_user_id){
