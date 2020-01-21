@@ -80,6 +80,7 @@ function auth(user_id){
 }
 
 function updateUserAllInfo(){
+  user_all_info={};
   const keys = Object.keys(user_status);
   for (let i = 0; i < keys.length; i++) {
     user_all_info[keys[i]+": "+user_names[keys[i]]]=user_status[keys[i]];
@@ -134,6 +135,7 @@ function new_event(){
     voter_name="準備中";
     user_names={};
     user_status={};
+    user_all_info={};
     io.emit('new_event', event_name);
 }
 
