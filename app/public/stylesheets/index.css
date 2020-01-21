@@ -91,17 +91,17 @@ body {
   60%{
     width:120%;
     height:0;
-    transform:rotate(5deg);
+    transform:rotate(10deg);
   }
   90%{
     width:120%;
     height:100%;
-    transform:rotate(-5deg);
+    transform:rotate(-10deg);
   }
   100%{
     width:120%;
     height:100%;
-    transform:rotate(-5deg);
+    transform:rotate(-10deg);
     z-index: -1;
   }
 }
