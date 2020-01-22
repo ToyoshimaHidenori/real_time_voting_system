@@ -125,10 +125,16 @@ function rewriteResult() {
 }
 
 function rewriteCard(){
+  
+  
   if($("input[name='votes']:checked").val()=='accept'){
     setAcceptCard();
+    $('#option1l').removeClass('active');
+    $('#option1').prop('checked', false);
   }else{
     setDenyCard();
+    $('#option2l').removeClass('active');
+    $('#option2').prop('checked', false);
   }
 }
 

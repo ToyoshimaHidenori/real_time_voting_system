@@ -67,10 +67,10 @@
                         </div>
                         <form id="ballot_form" class="" action="#">
                             <div id="ballot" class="btn-group btn-group-toggle shadow ml-3 mb-3 mt-3 mr-5" data-toggle="buttons">
-                                <label class="btn btn-lg btn-outline-success">
-                                <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" checked> <i class="fas fa-thumbs-up"></i> 承認
+                                <label id="option1l" class="btn btn-lg btn-outline-success">
+                                <input type="radio" name="votes" id="option1" value="accept" onchange="setAcceptCard()" required> <i class="fas fa-thumbs-up"></i> 承認
                                 </label>
-                                <label class="btn btn-lg btn-outline-danger">
+                                <label id="option2l" class="btn btn-lg btn-outline-danger">
                                 <input type="radio" name="votes" id="option2" value="deny" onchange="setDenyCard()"> <i class="fas fa-thumbs-down"></i> 否認
                                 </label>
                             </div>
