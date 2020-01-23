@@ -3,3 +3,5 @@ sample/
 *.aep
 ver*/
 heroku/
+node_modles/
+*.swp
