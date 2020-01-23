@@ -3,7 +3,8 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
+    command: node app.js
     volumes: 
       - ./app:/app
     ports:
