@@ -2,7 +2,7 @@ FROM node:12.14.1-alpine3.11
 
 WORKDIR /app
 
-COPY app/package*.json ./
+COPY app/* ./
 RUN npm install
 RUN npm install express-generator -g
 
