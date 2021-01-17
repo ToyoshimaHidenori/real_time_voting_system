@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: node app
+  web: node app.js

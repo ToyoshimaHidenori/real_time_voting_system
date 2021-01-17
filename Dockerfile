@@ -7,4 +7,4 @@ RUN npm install
 RUN npm install express-generator -g
 
 # デフォルトで node が起動するので sh を代わりに起動
-# CMD node app.js
+CMD node app.js
