@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command: node app.js
-    volumes: 
-      - ./app:/app
+    # volumes: 
+    #   - ./app:/app
     ports:
       - 7000:7000
