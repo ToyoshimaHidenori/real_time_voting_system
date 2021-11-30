@@ -1,4 +1,4 @@
-# real_time_votiong_system
+# real_time_voting_system
 
 
 ## 環境構築
